@@ -86,11 +86,17 @@ def delete_skill():
 def update_skill():
     
     sk=input("Write The Skill Name ").strip().capitalize()
-    prog=input("Write The New Skill Progress : ") 
-    cr.execute(f"update skills set Progress='{prog}' where Name='{sk}' and User_ID='{uid}'")
-    print("Your Skill Is Updated")
-    db.commit()
-    another_operation()
+    cr.execute(f"select * from skills where Name='{sk}' and User_ID='{uid}' ")
+    chk=cr.fetchone()
+    if chk=None:
+        print("This Skill Is Not Found")
+        another_operation()
+    else:
+        prog=input("Write The New Skill Progress : ") 
+        cr.execute(f"update skills set Progress='{prog}' where Name='{sk}' and User_ID='{uid}'")
+        print("Your Skill Is Updated")
+        db.commit()
+        another_operation()
 
 
 print("Hello ")
